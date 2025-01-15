@@ -37,20 +37,20 @@ namespace Wabbajack
 
         private void OnStartup(object sender, StartupEventArgs e)
         {
-            if (IsAdmin())
-            {
-                var messageBox = MessageBox.Show("Don't run Wabbajack as Admin!", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
-                if (messageBox == MessageBoxResult.OK)
-                {
-                    Environment.Exit(1);
-                }
-                else
-                {
-                    Environment.Exit(1);
-                }
-            }
+            //if (IsAdmin())
+                //{
+                //    var messageBox = MessageBox.Show("Don't run Wabbajack as Admin!", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                //    if (messageBox == MessageBoxResult.OK)
+                //    {
+                //        Environment.Exit(1);
+                //    }
+                //    else
+                //    {
+                //        Environment.Exit(1);
+                //    }
+                //}
 
-            RxApp.MainThreadScheduler = new DispatcherScheduler(Dispatcher.CurrentDispatcher);
+                RxApp.MainThreadScheduler = new DispatcherScheduler(Dispatcher.CurrentDispatcher);
             _host = Host.CreateDefaultBuilder(Array.Empty<string>())
                 .ConfigureLogging(AddLogging)
                 .ConfigureServices((host, services) =>
@@ -92,25 +92,25 @@ namespace Wabbajack
             });
         }
 
-        private static bool IsAdmin()
-        {
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return false;
+        //private static bool IsAdmin()
+        //{
+        //    if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return false;
 
-            try
-            {
-                var identity = WindowsIdentity.GetCurrent();
-                var owner = identity.Owner;
-                if (owner is not null) return owner.IsWellKnown(WellKnownSidType.BuiltinAdministratorsSid);
+        //    try
+        //    {
+        //        var identity = WindowsIdentity.GetCurrent();
+        //        var owner = identity.Owner;
+        //        if (owner is not null) return owner.IsWellKnown(WellKnownSidType.BuiltinAdministratorsSid);
 
-                var principle = new WindowsPrincipal(identity);
-                return principle.IsInRole(WindowsBuiltInRole.Administrator);
+        //        var principle = new WindowsPrincipal(identity);
+        //        return principle.IsInRole(WindowsBuiltInRole.Administrator);
 
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return false;
+        //    }
+        //}
 
         private void AddLogging(ILoggingBuilder loggingBuilder)
         {
